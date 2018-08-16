@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -25,7 +26,7 @@ public class RecViewAdapterPhotoVideo extends RecyclerView.Adapter<RecViewAdapte
     private OnItemClick onItemClick;
     private List<mFile> mFiles;
 
-    public RecViewAdapterPhotoVideo(List<mFile> mFiles, OnItemClick onItemClick){this.mFiles = mFiles;this.onItemClick = onItemClick;}
+    public RecViewAdapterPhotoVideo(List<mFile> mFiles){this.mFiles = mFiles;}
 
     @NonNull
     @Override
@@ -37,7 +38,7 @@ public class RecViewAdapterPhotoVideo extends RecyclerView.Adapter<RecViewAdapte
     @Override
     public void onBindViewHolder(@NonNull final RecViewAdapterPhotoVideo.ViewHolder holder, final int position) {
 
-        holder.bind(mFiles.get(position),position);
+        holder.bind(mFiles.get(position));
     }
 
     @Override
@@ -49,16 +50,23 @@ public class RecViewAdapterPhotoVideo extends RecyclerView.Adapter<RecViewAdapte
         private ImageView image;
         private TextView name;
         private VideoView videoView;
+        private LinearLayout item;
 
         ViewHolder(View itemView) {
             super(itemView);
-
+            item = itemView.findViewById(R.id.item);
             image = itemView.findViewById(R.id.imageView);
             name = itemView.findViewById(R.id.nameFile);
             videoView = itemView.findViewById(R.id.videoView);
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClick.onItem(getAdapterPosition());
+                }
+            });
         }
 
-        void bind(final mFile mFile, final int possition){
+        void bind(final mFile mFile){
             if(mFile.getmFiles() != null) {
                 name.setText(mFile.getmFiles().getPath());
                 InputStream imageStream;
@@ -88,17 +96,11 @@ public class RecViewAdapterPhotoVideo extends RecyclerView.Adapter<RecViewAdapte
                 videoView.setVisibility(View.GONE);
                 image.setImageResource(R.drawable.iconsorwardarrow64);
             }
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClick.onItem(possition);
-                }
-            });
-
         }
 
     }
-    public void notifyData(){
-        notifyDataSetChanged();
+
+    public void setListener(OnItemClick onItemClick){
+        this.onItemClick = onItemClick;
     }
 }

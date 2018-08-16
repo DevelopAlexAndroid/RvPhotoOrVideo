@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClick,Dialo
 
 
     private List<mFile> mFileList = new ArrayList<>();
-    private RecViewAdapterPhotoVideo adapterPhotoVideo = new RecViewAdapterPhotoVideo(mFileList,this);
+    private RecViewAdapterPhotoVideo adapterPhotoVideo = new RecViewAdapterPhotoVideo(mFileList);
     private int PERMISSION_CODE_STORAGE = 100;
     private Dialog dialog = new Dialog();
     private String head,message,butPos,butNegat,format;
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClick,Dialo
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerPhotoVideo.setLayoutManager(linearLayoutManager);
+        adapterPhotoVideo.setListener(this);
         recyclerPhotoVideo.setAdapter(adapterPhotoVideo);
         OnRequestPermission.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 PERMISSION_CODE_STORAGE);
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClick,Dialo
                     }else {mFile.setFormatImage(false);}
 
                     mFileList.set(possition,mFile);
-                    adapterPhotoVideo.notifyData();
+                    adapterPhotoVideo.notifyDataSetChanged();
                 }
                 break;
         }
