@@ -9,7 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.usersad.projectrvphotoorvideo.helper.Dialog;
-import com.example.usersad.projectrvphotoorvideo.helper.DialogClick;
+import com.example.usersad.projectrvphotoorvideo.helper.onDialogButtonClickListener;
 import com.example.usersad.projectrvphotoorvideo.helper.OnItemClick;
 import com.example.usersad.projectrvphotoorvideo.R;
 import com.example.usersad.projectrvphotoorvideo.adapter.RecViewAdapterPhotoVideo;
@@ -19,7 +19,7 @@ import com.example.usersad.projectrvphotoorvideo.model.mFile;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnItemClick,DialogClick {
+public class MainActivity extends AppCompatActivity implements OnItemClick,onDialogButtonClickListener {
 
 
     private List<mFile> mFileList = new ArrayList<>();
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClick,Dialo
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerPhotoVideo.setLayoutManager(linearLayoutManager);
-        adapterPhotoVideo.setListener(this);
+        adapterPhotoVideo.setOnItemClickListener(this);
         recyclerPhotoVideo.setAdapter(adapterPhotoVideo);
         OnRequestPermission.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 PERMISSION_CODE_STORAGE);
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClick,Dialo
     }
 
     @Override
-    public void clickButton(String info) {
+    public void onDialogButtonClick(String info) {
         if (info.equals(""))return;
         format = info;
         selectImage();

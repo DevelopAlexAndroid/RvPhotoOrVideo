@@ -100,7 +100,7 @@ public class RecViewAdapterPhotoVideo extends RecyclerView.Adapter<RecViewAdapte
 
     }
 
-    public void setListener(OnItemClick onItemClick){
+    public void setOnItemClickListener(OnItemClick onItemClick){
         this.onItemClick = onItemClick;
     }
 }
