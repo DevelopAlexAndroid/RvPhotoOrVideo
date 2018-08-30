@@ -11,6 +11,7 @@ public class Dialog {
 
     public void getDialog(final Context context,
                           String head, String butPositive, String butNegative, String message, final onDialogButtonClickListener onDialogButtonClickListenerListener){
+
         AlertDialog.Builder alertD = new AlertDialog.Builder(context);
         alertD.setTitle(head);
         alertD.setMessage(message);
